@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from bs4 import BeautifulSoup
 import time
 
 ######################################
@@ -21,12 +22,18 @@ inputElement.send_keys('2987')
 inputElement2 = driver.find_element_by_id('_58_password')
 inputElement2.send_keys('Pinboy1$')
 inputElement2.send_keys(Keys.ENTER)
+time.sleep(3)
+print('test')
 driver.get('https://oakhillcc.com/group/pages/member-roster')
-buttons = driver.find_element_by_xpath("//*[contains(text(), 'Member Roster')]")
-buttons.click()
-# time.sleep(5)
-pageBtn = driver.find_element_by_xpath("//*[contains(text(), '2')]")
-pageBtn.click()
+time.sleep(5)
+driver.find_element_by_class_name('ui-icon-seek-next')
+
+# buttons = driver.find_element_by_link_text("Member Roster").click()
+# time.sleep(3)
+# driver.refresh()
+# time.sleep(3)
+# pageBtn = driver.find_element_by_xpath("//*[contains(text(), '2')]")
+# pageBtn.click()
 
 
 
