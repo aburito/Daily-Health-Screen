@@ -3,6 +3,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
 import time
 import sys
+from datetime import datetime
+import smtplib, ssl
+
+from email.message import EmailMessage
+from datetime import date
+
 
 
 #########################################################
@@ -10,7 +16,7 @@ import sys
 #           https://chromedriver.chromium.org/          #
 #########################################################
 def DailyHealthLogger(userName, passWord):
-    driver = webdriver.Chrome(executable_path="C:/Users/drdst/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path="C:\\chromedriver.exe")
     driver.maximize_window()
 
     driver.get("https://dailyhealth.rit.edu")
@@ -29,6 +35,25 @@ def DailyHealthLogger(userName, passWord):
     action.perform()
     time.sleep(5)
     driver.close()
+    Email(userName)
+
+    context = ssl.create_default_context()
+def Email(username):
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "dailyhealthlogger@gmail.com"  # Enter your address
+    receiver_email = username + '@rit.edu'  # Enter receiver address
+    password = 'AutomateHealth21'
+    message = f"""\
+    Subject: Daily Health Complete {datetime.now()}
+
+    Your daily health screen was completed on {datetime.now()}"""
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
+        print('Email Sent')
 
 
 DailyHealthLogger(sys.argv[1], sys.argv[2])
